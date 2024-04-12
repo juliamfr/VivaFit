@@ -1,80 +1,104 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-export default function App() {
+import React, { useState } from 'react';
+import { View, TextInput, Button, Text, StyleSheet, Image } from 'react-native';
+
+const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleLogin = () => {
+    if (email === '' || password === '') {
+      setErrorMessage('Campo Vazio. Por favor, preencha todos os campos!');
+    } else {
+      // lógica de autenticação aqui
+      setErrorMessage(''); // limpa a mensagem de erro se os campos estiverem preenchidos
+    }
+  };
+
   return (
- 
-    <View style={estilos.container}>
-
-  <Image
-    source={require('./assets/image 2.png')} style={estilos.Image}  
-    >
-
-    </Image>
-
-    <Text style={estilos.texto}>
-      E-mail
-    </Text>    
-    <TextInput style={estilos.input}/> 
-    <Text style={estilos.texto}>
-      Senha
-    </Text>    
-    <TextInput style={estilos.input}/> 
-  
-    <TouchableOpacity style={estilos.button1}>
-      <Text>
-        Entrar
-      </Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={estilos.button2}>
-      <Text>
-        Entrar pelo Google
-      </Text>
-    </TouchableOpacity>
-
-    
-   
+    <View style={styles.container}>
+      <Image
+        source={require('./assets/assets/image 19.png')} 
+        style={styles.logo}
+      />
+      <View style={styles.bloco}>
+        {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={[styles.input, {marginTop: 10}]} // adicionando espaço entre os campos
+          placeholder="Senha"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          style={[styles.input, {marginTop: 10}]} // adicionando espaço entre os campos
+          placeholder="Confirme sua senha"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <View style={{marginTop: 40}}> {/* adicionando espaço acima do botão */}
+          <Button 
+            title="Entrar" 
+            onPress={handleLogin} 
+            color="#000000" 
+          />
+        </View>
+        <View style={{marginTop: 40}}> {/* adicionando espaço acima do botão */}
+        
+          <Button 
+       
+            title="Entrar com o Google" 
+            onPress={handleLogin} 
+            color="#000000" 
+          
+          />
+        </View>
+      </View>
     </View>
-
   );
-}
+};
 
-
-const estilos = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C2126',
-    alignItems: 'center',
     justifyContent: 'center',
-    gap: 8
-  },
-  texto:{
-    color: "#ffffff",
-    fontSize: 12
-  },
-  input:{
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    borderRadius: 8,
-    width:'50%',
-    backgroundColor:'#ffffff',
-  },
-  button1:{
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 8,  
-    marginTop: 20,
-  },
-  
-  button2:{
-    backgroundColor: '#52FFEA',
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 8, 
-    marginTop: 25, 
-  },
-  image:{
     alignItems: 'center',
-  }
+    padding: 20,
+    backgroundColor: '#1C2126', // cor de fundo
+  },
+  logo: {
+    width: 300, 
+    height: 200,
+    marginBottom: 50,
+  },
+  bloco: {
+    backgroundColor: '#37414B',
+    height: 400,
+    width: '80%',
+    padding: 24,
+    marginBottom: 32,
+    borderRadius: 16,
+  },
+  input: {
+    height: 40,
+    width: '100%',
+    borderColor: '#52FFEA', // cor da borda
+    borderBottomWidth: 1,
+    marginBottom: 20, // adicionando espaço entre os campos
+    paddingHorizontal: 10,
+    color: '#FFF', // cor do texto
+  },
+  errorText: {
+    color: '#ffffff',
+    marginBottom: 10,
+  },
 });
+
+export default LoginScreen;
